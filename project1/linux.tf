@@ -8,6 +8,7 @@ resource "vcd_vapp_vm" "tf_linux_vm" {
   computer_name = "tf-linux-vm"
   catalog_name  = var.src_catalog
   template_name = var.src_template
+  memory        = var.memory
   power_on      = true
 
   network {

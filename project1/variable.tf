@@ -25,3 +25,4 @@ variable "src_template" {
     description = "vApp template name"
 }
 variable "org_net" {}
+variable "memory" {}
