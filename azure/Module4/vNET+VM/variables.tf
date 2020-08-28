@@ -12,3 +12,9 @@ variable "location" {
     type = string
     description = "location of your resource group"
 }
+
+variable "admin_password" {
+    type = string
+    description = "VM admin password"
+    #default = "Shouldnotusedefault!"
+}

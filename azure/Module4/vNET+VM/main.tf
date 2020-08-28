@@ -101,6 +101,7 @@ resource "azurerm_virtual_machine" "CloudskilsDevVM" {
 #  network_interface_ids = ["/subscriptions/${var.subscriptionID}/resourceGroups/${var.resourceGroupName}/providers/Microsoft.Network/networkInterfaces/${azurerm_network_interface.main.name}"]
   network_interface_ids = ["/subscriptions/${var.subscriptionID}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Network/networkInterfaces/${azurerm_network_interface.main.name}"]
   vm_size               = "Standard_DS1_v2"
+  delete_os_disk_on_termination = true
 
   storage_image_reference {
     publisher = "Canonical"
@@ -119,7 +120,8 @@ resource "azurerm_virtual_machine" "CloudskilsDevVM" {
   os_profile {
     computer_name  = "cloudskillsdev01"
     admin_username = "azureuser"
-    admin_password = "W3lcomeWorld12!!"
+    #admin_password = "W3lcomeWorld12!!"
+    admin_password = var.admin_password
   }
 
   os_profile_linux_config {
