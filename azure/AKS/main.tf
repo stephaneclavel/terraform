@@ -10,29 +10,29 @@ terraform {
 */
 
 provider azurerm {
-  version = "= 2.26.0"
+  version = ">= 2.20.0"
   features {}
 }
 
 resource "azurerm_resource_group" "rg" {
-    name     = var.resourceGroup
-    location = var.location
-    tags      = {
-      Environment = "Terraform AKS Demo"
-    }
+  name     = var.resourceGroup
+  location = var.location
+  tags = {
+    Environment = "Terraform AKS Demo"
+  }
 }
 
 resource "azurerm_kubernetes_cluster" "CloudSkillsAKS" {
-  name                = var.Name
-  location            = var.location
-#  resource_group_name = var.resourceGroup
+  name     = var.Name
+  location = var.location
+  #  resource_group_name = var.resourceGroup
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = "cloudskillsprefix"
 
   default_node_pool {
-    name = "default"
+    name       = "default"
     node_count = 1
-    vm_size = "Standard_D2_v2"
+    vm_size    = "Standard_D2_v2"
   }
   service_principal {
     client_id     = var.clientID
