@@ -1,7 +1,7 @@
 {
   "version": 4,
   "terraform_version": "0.12.26",
-  "serial": 185,
+  "serial": 183,
   "lineage": "f82ded45-62cc-7dc2-048e-868f362785ce",
   "outputs": {
     "pip": {
@@ -46,15 +46,16 @@
             ],
             "resource_group_name": "CloudSkilsRG1992",
             "tags": {},
-            "timeouts": {
-              "create": null,
-              "delete": null,
-              "read": null,
-              "update": null
-            },
+            "timeouts": null,
             "virtual_machine_id": "/subscriptions/88e98c7d-911a-45db-87e2-c788bd626c53/resourceGroups/CloudSkilsRG1992/providers/Microsoft.Compute/virtualMachines/cloudskillsvm"
           },
-          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIwIn0="
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_network_security_group.CloudskillsSG",
+            "azurerm_resource_group.rg",
+            "azurerm_subnet.cloudskills-sub",
+            "azurerm_virtual_network.cloudskills-vnet"
+          ]
         }
       ]
     },

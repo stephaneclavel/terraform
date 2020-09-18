@@ -91,6 +91,7 @@ resource "azurerm_network_interface" "main" {
     name                          = "cloudskills-nic-ip-config"
     subnet_id                     = azurerm_subnet.cloudskills-sub.id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id	  = azurerm_public_ip.cloudskills-publicIP.id
   }
 }
 
@@ -131,6 +132,11 @@ resource "azurerm_virtual_machine" "CloudskilsDevVM" {
     managed_disk_type = "Standard_LRS"
   }
 
+  boot_diagnostics {
+    enabled     = true 
+    storage_uri = "https://storageaccount18092020.blob.core.windows.net/" 
+  }
+ 
   os_profile {
     computer_name  = "cloudskillsdev01"
     admin_username = "azureuser"
