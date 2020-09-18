@@ -139,14 +139,18 @@ resource "azurerm_virtual_machine" "CloudskilsDevVM" {
  
   os_profile {
     computer_name  = "cloudskillsdev01"
-    admin_username = "azureuser"
+    admin_username = "steph"
     #admin_password = "W3lcomeWorld12!!"
     admin_password = var.admin_password
   }
 
   os_profile_linux_config {
 # disable password auth as insecure to push on CVS
-    disable_password_authentication = false
+    disable_password_authentication = true
+    ssh_keys {
+        path	 = "/home/steph/.ssh/authorized_keys"
+        key_data = file("~/.ssh/id_rsa.pub")
+    }
   }
 
   tags = {
