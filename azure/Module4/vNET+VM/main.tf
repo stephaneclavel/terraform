@@ -23,7 +23,7 @@ resource "azurerm_network_security_group" "CloudskillsSG" {
 
 resource "azurerm_network_security_rule" "Port80" {
   name                        = "Allow80"
-  priority                    = 102
+  priority                    = 100
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
@@ -44,6 +44,20 @@ resource "azurerm_network_security_rule" "Port443" {
   source_port_range           = "*"
   destination_port_range      = "443"
   source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_network_security_group.CloudskillsSG.resource_group_name
+  network_security_group_name = azurerm_network_security_group.CloudskillsSG.name
+}
+
+resource "azurerm_network_security_rule" "Port22" {
+  name                        = "Allow22"
+  priority                    = 102
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = var.mypublicip
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_network_security_group.CloudskillsSG.resource_group_name
   network_security_group_name = azurerm_network_security_group.CloudskillsSG.name

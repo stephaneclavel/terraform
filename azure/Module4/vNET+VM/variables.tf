@@ -16,5 +16,10 @@ variable "location" {
 variable "admin_password" {
     type = string
     description = "VM admin password"
-    #default = "Shouldnotusedefault!"
+    default = "Shouldnotusedefault!"
+}
+
+variable "mypublicip" {
+    type = string
+    description = "internet ip address"
 }
