@@ -107,6 +107,25 @@ resource "azurerm_public_ip" "cloudskills-publicIP" {
         }   
     }
 
+resource "random_string" "storageaccountname" {
+  length  = 12
+  upper   = false
+  number  = true
+  lower   = true
+  special = false
+}
+
+locals {
+  storageaccountname = "storage${random_string.storageaccountname.result}"
+}
+
+resource "azurerm_storage_account" "example" {
+  name                     = local.storageaccountname
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
 
 resource "azurerm_virtual_machine" "CloudskilsDevVM" {
   name                  = "cloudskillsvm"
@@ -131,12 +150,13 @@ resource "azurerm_virtual_machine" "CloudskilsDevVM" {
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
-/*
+
   boot_diagnostics {
     enabled     = true 
-    storage_uri = "https://storageaccount18092020.blob.core.windows.net/" 
+    #storage_uri = "https://storageaccount18092020.blob.core.windows.net/"
+    storage_uri = azurerm_storage_account.example.primary_blob_endpoint 
   }
-*/
+
   os_profile {
     computer_name  = "cloudskillsdev01"
     admin_username = "steph"
