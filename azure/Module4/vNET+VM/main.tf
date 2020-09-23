@@ -131,12 +131,12 @@ resource "azurerm_virtual_machine" "CloudskilsDevVM" {
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
-
+/*
   boot_diagnostics {
     enabled     = true 
     storage_uri = "https://storageaccount18092020.blob.core.windows.net/" 
   }
- 
+*/
   os_profile {
     computer_name  = "cloudskillsdev01"
     admin_username = "steph"
