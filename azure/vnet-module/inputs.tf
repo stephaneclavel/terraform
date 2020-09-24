@@ -36,7 +36,7 @@ module "vnet" {
     costcenter  = "it"
   }
 
-#  depends_on = [azurerm_resource_group.example]
+  depends_on = [azurerm_resource_group.example]
 }
 
 resource "azurerm_network_security_group" "ssh" {
