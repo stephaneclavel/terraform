@@ -1,10 +1,10 @@
 resource "azurerm_network_interface" "main" {
-  name                = "cloudskills-nic"
+  name                = "vm-nic"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 
   ip_configuration {
-    name                          = "cloudskills-nic-ip-config"
+    name                          = "vm-nic-ip-config"
     subnet_id                     = module.vnet.vnet_subnets[0] #this output points to subnet id
     private_ip_address_allocation = "Dynamic"
   }
@@ -30,8 +30,8 @@ resource "azurerm_storage_account" "example" {
   account_replication_type = "LRS"
 }
 
-resource "azurerm_virtual_machine" "CloudskilsDevVM" {
-  name                  = "cloudskillsvm"
+resource "azurerm_virtual_machine" "VM" {
+  name                  = "vm"
   location              = azurerm_resource_group.example.location
   resource_group_name   = azurerm_resource_group.example.name
   network_interface_ids = ["/subscriptions/${var.subscriptionID}/resourceGroups/${azurerm_resource_group.example.name}/providers/Microsoft.Network/networkInterfaces/${azurerm_network_interface.main.name}"]
@@ -58,7 +58,7 @@ resource "azurerm_virtual_machine" "CloudskilsDevVM" {
   }
 
   os_profile {
-    computer_name  = "cloudskillsdev01"
+    computer_name  = "ubuntu01"
     admin_username = "steph"
     admin_password = var.admin_password
   }
