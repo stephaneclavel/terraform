@@ -82,6 +82,11 @@ resource "azurerm_subnet" "cloudskills-sub" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
+resource "azurerm_subnet_network_security_group_association" "example" {
+  subnet_id                 = azurerm_subnet.cloudskills-sub.id
+  network_security_group_id = azurerm_network_security_group.CloudskillsSG.id
+}
+
 resource "azurerm_network_interface" "main" {
   name                = "cloudskills-nic"
   location            = azurerm_resource_group.rg.location
