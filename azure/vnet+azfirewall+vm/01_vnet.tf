@@ -18,7 +18,7 @@ module "vnet" {
     subnet1 = azurerm_network_security_group.ssh.id
   }
 
-   route_tables_ids = {
+  route_tables_ids = {
     subnet1 = azurerm_route_table.example.id
   }
 
@@ -26,7 +26,7 @@ module "vnet" {
 }
 
 resource "azurerm_network_security_group" "ssh" {
-#  depends_on          = [module.vnet]
+  #  depends_on          = [module.vnet]
   name                = "ssh"
   location            = "North Europe"
   resource_group_name = azurerm_resource_group.example.name
@@ -57,6 +57,6 @@ resource "azurerm_route" "example" {
   route_table_name    = azurerm_route_table.example.name
   address_prefix      = "0.0.0.0/0"
   next_hop_type       = "virtualappliance"
-#  next_hop_in_ip_address = "10.0.254.4"
+  #  next_hop_in_ip_address = "10.0.254.4"
   next_hop_in_ip_address = azurerm_firewall.example.ip_configuration[0].private_ip_address
 }

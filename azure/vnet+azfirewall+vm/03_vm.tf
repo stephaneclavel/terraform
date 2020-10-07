@@ -31,11 +31,11 @@ resource "azurerm_storage_account" "example" {
 }
 
 resource "azurerm_virtual_machine" "VM" {
-  name                  = "vm"
-  location              = azurerm_resource_group.example.location
-  resource_group_name   = azurerm_resource_group.example.name
-  network_interface_ids = ["/subscriptions/${var.subscriptionID}/resourceGroups/${azurerm_resource_group.example.name}/providers/Microsoft.Network/networkInterfaces/${azurerm_network_interface.main.name}"]
-  vm_size               = "Standard_DS1_v2"
+  name                          = "vm"
+  location                      = azurerm_resource_group.example.location
+  resource_group_name           = azurerm_resource_group.example.name
+  network_interface_ids         = ["/subscriptions/${var.subscriptionID}/resourceGroups/${azurerm_resource_group.example.name}/providers/Microsoft.Network/networkInterfaces/${azurerm_network_interface.main.name}"]
+  vm_size                       = "Standard_DS1_v2"
   delete_os_disk_on_termination = true
 
   storage_image_reference {
@@ -53,8 +53,8 @@ resource "azurerm_virtual_machine" "VM" {
   }
 
   boot_diagnostics {
-    enabled     = true 
-    storage_uri = azurerm_storage_account.example.primary_blob_endpoint 
+    enabled     = true
+    storage_uri = azurerm_storage_account.example.primary_blob_endpoint
   }
 
   os_profile {
@@ -64,11 +64,11 @@ resource "azurerm_virtual_machine" "VM" {
   }
 
   os_profile_linux_config {
-# disable password auth as insecure to push on CVS
-    disable_password_authentication = false 
+    # disable password auth as insecure to push on CVS
+    disable_password_authentication = false
     ssh_keys {
-        path	 = "/home/steph/.ssh/authorized_keys"
-        key_data = file("~/.ssh/id_rsa.pub")
+      path     = "/home/steph/.ssh/authorized_keys"
+      key_data = file("~/.ssh/id_rsa.pub")
     }
   }
 
