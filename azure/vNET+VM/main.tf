@@ -1,6 +1,5 @@
 provider "azurerm" {
     version = "2.9.0"
-    subscription_id = var.subscriptionID
 
     features {}
 }
@@ -10,7 +9,7 @@ resource "azurerm_resource_group" "rg" {
     name     = var.resourceGroupName 
     location = var.location
     tags      = {
-      Environment = "Terraform Demo"
+      env = "az104"
     }
 }
 
@@ -138,7 +137,8 @@ resource "azurerm_virtual_machine" "CloudskilsDevVM" {
   resource_group_name   = azurerm_resource_group.rg.name
 #  network_interface_ids = ["${var.network_interface_id}"]
 #  network_interface_ids = ["/subscriptions/${var.subscriptionID}/resourceGroups/${var.resourceGroupName}/providers/Microsoft.Network/networkInterfaces/${azurerm_network_interface.main.name}"]
-  network_interface_ids = ["/subscriptions/${var.subscriptionID}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Network/networkInterfaces/${azurerm_network_interface.main.name}"]
+#  network_interface_ids = ["/subscriptions/${var.subscriptionID}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Network/networkInterfaces/${azurerm_network_interface.main.name}"]
+  network_interface_ids = [azurerm_network_interface.main.id]
   vm_size               = "Standard_DS1_v2"
   delete_os_disk_on_termination = true
 
