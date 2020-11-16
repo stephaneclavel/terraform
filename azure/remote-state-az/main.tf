@@ -17,4 +17,8 @@ provider "azurerm" {
 resource "azurerm_resource_group" "state-demo-secure" {
   name     = "state-demo"
   location = "eastus"
+
+  tags = {
+    env = "az104"
+  }
 }
