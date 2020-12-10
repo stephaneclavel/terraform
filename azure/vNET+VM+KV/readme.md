@@ -1,3 +1,3 @@
 1/ set necessary env var to connect to Azure . ./set-azure-env-var.sh 
 
-2/ admin_password variable has a default value, should be overiden by terraform apply -var admin_password="" or set env var TF_VAR_admin_password=value
+2/ deploys RG, vnet, subnet, rules(no rdp rule, need JIT), NSG, pip, nic, storage account (for boot diag), windows vm with password stored in an existing KV. 

@@ -1,2 +1,2 @@
-resourceGroupName = "vnetvmkv-RG"
-location          = "eastus"
+resourceGroupName = "rg-demo-test-westeu-001"
+location          = "westeurope"
