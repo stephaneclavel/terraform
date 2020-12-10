@@ -1,15 +1,15 @@
 provider "azurerm" {
-    version = "2.9.0"
-    features {}
+  version = "2.9.0"
+  features {}
 }
 
 #create resource group
 resource "azurerm_resource_group" "rg-demo-test-westeurope-001" {
-    name     = var.resourceGroupName 
-    location = var.location
-    tags      = {
-      env = "tf-demo"
-    }
+  name     = var.resourceGroupName
+  location = var.location
+  tags = {
+    env = "tf-demo"
+  }
 }
 
 resource "azurerm_network_security_group" "nsg-demo-test-westeurope-001" {
@@ -90,7 +90,7 @@ resource "azurerm_network_interface" "nic-demo-test-westeurope-001" {
     name                          = "nicipconfig"
     subnet_id                     = azurerm_subnet.snet-demo-test-westeurope-001.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id	  = azurerm_public_ip.pip-demo-test-westeurope-001.id
+    public_ip_address_id          = azurerm_public_ip.pip-demo-test-westeurope-001.id
   }
 }
 
@@ -123,11 +123,11 @@ resource "azurerm_storage_account" "st-demo-test-westeurope-001" {
 }
 
 resource "azurerm_virtual_machine" "vm-demo-test-westeurope-001" {
-  name                  = "vm-demo-test-westeurope-001"
-  location              = var.location
-  resource_group_name   = azurerm_resource_group.rg-demo-test-westeurope-001.name
-  network_interface_ids = [azurerm_network_interface.nic-demo-test-westeurope-001.id]
-  vm_size               = "Standard_DS1_v2"
+  name                          = "vm-demo-test-westeurope-001"
+  location                      = var.location
+  resource_group_name           = azurerm_resource_group.rg-demo-test-westeurope-001.name
+  network_interface_ids         = [azurerm_network_interface.nic-demo-test-westeurope-001.id]
+  vm_size                       = "Standard_DS1_v2"
   delete_os_disk_on_termination = true
 
   storage_image_reference {
@@ -145,8 +145,8 @@ resource "azurerm_virtual_machine" "vm-demo-test-westeurope-001" {
   }
 
   boot_diagnostics {
-    enabled     = true 
-    storage_uri = azurerm_storage_account.st-demo-test-westeurope-001.primary_blob_endpoint 
+    enabled     = true
+    storage_uri = azurerm_storage_account.st-demo-test-westeurope-001.primary_blob_endpoint
   }
 
   os_profile {
@@ -157,8 +157,8 @@ resource "azurerm_virtual_machine" "vm-demo-test-westeurope-001" {
   os_profile_linux_config {
     disable_password_authentication = true
     ssh_keys {
-        path	 = "/home/steph/.ssh/authorized_keys"
-        key_data = file("~/.ssh/id_rsa.pub")
+      path     = "/home/steph/.ssh/authorized_keys"
+      key_data = file("~/.ssh/id_rsa.pub")
     }
   }
 
