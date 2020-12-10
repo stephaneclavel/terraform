@@ -20,7 +20,7 @@ resource "azurerm_network_security_group" "nsg-demo-test-westeurope-001" {
 
 resource "azurerm_network_security_rule" "Port80" {
   name                        = "Allow80"
-  priority                    = 100
+  priority                    = 1000
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
@@ -34,7 +34,7 @@ resource "azurerm_network_security_rule" "Port80" {
 
 resource "azurerm_network_security_rule" "Port443" {
   name                        = "Allow443"
-  priority                    = 101
+  priority                    = 1001
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
@@ -97,7 +97,7 @@ resource "random_string" "storageaccountname" {
 }
 
 locals {
-  storageaccountname = "storage${random_string.storageaccountname.result}"
+  storageaccountname = "stordemoweeu${random_string.storageaccountname.result}"
 }
 
 resource "azurerm_storage_account" "st-demo-test-westeurope-001" {
@@ -124,7 +124,7 @@ resource "azurerm_virtual_machine" "vm-demo-test-westeurope-001" {
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2016-Datacenter-Server"
+    sku       = "2016-Datacenter"
     version   = "latest"
   }
 
@@ -141,10 +141,12 @@ resource "azurerm_virtual_machine" "vm-demo-test-westeurope-001" {
   }
 
   os_profile {
-    computer_name  = "vm-demo-test-westeurope-001"
+    computer_name  = "vmdemowesteu001"
     admin_username = "steph"
     admin_password = data.azurerm_key_vault_secret.mySecret.value
   }
 
-
+  os_profile_windows_config {
+    
+  }
 }
