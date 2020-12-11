@@ -20,15 +20,15 @@ module "vnet" {
   subnet_names        = ["subnet1", "subnet2", "subnet3"]
 
   nsg_ids = {
-    subnet1 = azurerm_network_security_group.ssh.id
-    subnet2 = azurerm_network_security_group.ssh.id
-    subnet3 = azurerm_network_security_group.ssh.id
+    subnet1 = azurerm_network_security_group.nsg-demo-test-westeurope-001.id
+    subnet2 = azurerm_network_security_group.nsg-demo-test-westeurope-001.id
+    subnet3 = azurerm_network_security_group.nsg-demo-test-westeurope-001.id
   }
 
    route_tables_ids = {
-    subnet1 = azurerm_route_table.example.id
-    subnet2 = azurerm_route_table.example.id
-    subnet3 = azurerm_route_table.example.id
+    subnet1 = azurerm_route_table.rt-demo-test-westeurope-001.id
+    subnet2 = azurerm_route_table.rt-demo-test-westeurope-001.id
+    subnet3 = azurerm_route_table.rt-demo-test-westeurope-001.id
   }
 
   subnet_service_endpoints = {
@@ -37,21 +37,20 @@ module "vnet" {
   }
 
   tags = {
-    environment = "dev"
-    costcenter  = "it"
+    env = "tf-demo"
   }
 
   depends_on = [azurerm_resource_group.rg-demo-test-westeurope-001]
 }
 
-resource "azurerm_network_security_group" "ssh" {
+resource "azurerm_network_security_group" "nsg-demo-test-westeurope-001" {
 #  depends_on          = [module.vnet]
-  name                = "ssh"
+  name                = "nsg-demo-test-westeurope-001"
   location            = azurerm_resource_group.rg-demo-test-westeurope-001.location
   resource_group_name = azurerm_resource_group.rg-demo-test-westeurope-001.name
 
   security_rule {
-    name                       = "test123"
+    name                       = "port22"
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
@@ -64,16 +63,16 @@ resource "azurerm_network_security_group" "ssh" {
 
 }
 
-resource "azurerm_route_table" "example" {
+resource "azurerm_route_table" "rt-demo-test-westeurope-001" {
   location            = azurerm_resource_group.rg-demo-test-westeurope-001.location
-  name                = "MyRouteTable"
+  name                = "rt-demo-test-westeurope-001"
   resource_group_name = azurerm_resource_group.rg-demo-test-westeurope-001.name
 }
 
-resource "azurerm_route" "example" {
+resource "azurerm_route" "ro-demo-test-westeurope-001" {
   name                = "acceptanceTestRoute1"
   resource_group_name = azurerm_resource_group.rg-demo-test-westeurope-001.name
-  route_table_name    = azurerm_route_table.example.name
+  route_table_name    = azurerm_route_table.rt-demo-test-westeurope-001.name
   address_prefix      = "10.1.0.0/16"
   next_hop_type       = "vnetlocal"
 }
