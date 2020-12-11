@@ -1,39 +1,47 @@
-resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "rg-demo-test-westeurope-001" {
+  name     = "rg-demo-test-westeurope-001"
   location = "West Europe"
+
+  tags = {
+    env = "tf-demo"
+  }
 }
 
-resource "azurerm_virtual_network" "example" {
-  name                = "examplevnet"
-  address_space       = ["192.168.1.0/24"]
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+resource "azurerm_virtual_network" "vnet-demo-test-westeurope-001" {
+  name                = "vnet-demo-test-westeurope-001"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.rg-demo-test-westeurope-001.location
+  resource_group_name = azurerm_resource_group.rg-demo-test-westeurope-001.name
 }
 
-resource "azurerm_subnet" "example" {
+resource "azurerm_subnet" "snet-demo-test-westeurope-002" {
   name                 = "AzureBastionSubnet"
-  resource_group_name  = azurerm_resource_group.example.name
-  virtual_network_name = azurerm_virtual_network.example.name
-  address_prefix       = "192.168.1.224/27"
+  resource_group_name  = azurerm_resource_group.rg-demo-test-westeurope-001.name
+  virtual_network_name = azurerm_virtual_network.vnet-demo-test-westeurope-001.name
+  address_prefixes     = ["10.0.255.224/27"]
 }
 
-resource "azurerm_public_ip" "example" {
-  name                = "examplepip"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+resource "azurerm_public_ip" "pip-demo-test-westeurope-002" {
+  name                = "pip-demo-test-westeurope-002"
+  location            = azurerm_resource_group.rg-demo-test-westeurope-001.location
+  resource_group_name = azurerm_resource_group.rg-demo-test-westeurope-001.name
   allocation_method   = "Static"
   sku                 = "Standard"
 }
 
-resource "azurerm_bastion_host" "example" {
-  name                = "examplebastion"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+resource "azurerm_bastion_host" "rg-demo-test-westeurope-001" {
+  name                = "rg-demo-test-westeurope-001bastion"
+  location            = azurerm_resource_group.rg-demo-test-westeurope-001.location
+  resource_group_name = azurerm_resource_group.rg-demo-test-westeurope-001.name
 
   ip_configuration {
     name                 = "configuration"
-    subnet_id            = azurerm_subnet.example.id
-    public_ip_address_id = azurerm_public_ip.example.id
+    subnet_id            = azurerm_subnet.snet-demo-test-westeurope-002.id
+    public_ip_address_id = azurerm_public_ip.pip-demo-test-westeurope-002.id
   }
 }
 
