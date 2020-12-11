@@ -147,6 +147,23 @@ resource "azurerm_virtual_machine" "vm-demo-test-westeurope-001" {
   }
 
   os_profile_windows_config {
-    
+    provision_vm_agent       = true  
   }
+
+}
+
+# Virtual Machine Extension to Install IIS
+resource "azurerm_virtual_machine_extension" "iis-vm-demo-test-westeurope-001-extension" {
+  #depends_on=[azurerm_windows_virtual_machine.web-windows-vm]  name = "win-${random_string.random-win-vm.result}-vm-extension"
+  name = "iis-vm-demo-test-westeurope-001-extension"
+  virtual_machine_id = azurerm_virtual_machine.vm-demo-test-westeurope-001.id
+  publisher = "Microsoft.Compute"
+  type = "CustomScriptExtension"
+  type_handler_version = "1.9"
+  settings = <<SETTINGS
+    { 
+      "commandToExecute": "powershell Install-WindowsFeature -name Web-Server -IncludeManagementTools;"
+    } 
+  SETTINGS
+
 }
