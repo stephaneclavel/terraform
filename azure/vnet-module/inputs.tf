@@ -25,7 +25,7 @@ module "vnet" {
     subnet3 = azurerm_network_security_group.nsg-demo-test-westeurope-001.id
   }
 
-   route_tables_ids = {
+  route_tables_ids = {
     subnet1 = azurerm_route_table.rt-demo-test-westeurope-001.id
     subnet2 = azurerm_route_table.rt-demo-test-westeurope-001.id
     subnet3 = azurerm_route_table.rt-demo-test-westeurope-001.id
@@ -44,7 +44,7 @@ module "vnet" {
 }
 
 resource "azurerm_network_security_group" "nsg-demo-test-westeurope-001" {
-#  depends_on          = [module.vnet]
+  #  depends_on          = [module.vnet]
   name                = "nsg-demo-test-westeurope-001"
   location            = azurerm_resource_group.rg-demo-test-westeurope-001.location
   resource_group_name = azurerm_resource_group.rg-demo-test-westeurope-001.name
