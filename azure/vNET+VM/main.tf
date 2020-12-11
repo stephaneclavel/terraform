@@ -122,6 +122,11 @@ resource "azurerm_storage_account" "st-demo-test-westeurope-001" {
   account_replication_type = "LRS"
 }
 
+# Data template Bash bootstrapping file
+data "template_file" "linux-vm-cloud-init" {
+  template = file("install-apache2.sh")
+}
+
 resource "azurerm_virtual_machine" "vm-demo-test-westeurope-001" {
   name                          = "vm-demo-test-westeurope-001"
   location                      = var.location
@@ -152,6 +157,7 @@ resource "azurerm_virtual_machine" "vm-demo-test-westeurope-001" {
   os_profile {
     computer_name  = "vm-demo-test-westeurope-001"
     admin_username = "steph"
+    custom_data = base64encode(data.template_file.linux-vm-cloud-init.rendered)
   }
 
   os_profile_linux_config {
