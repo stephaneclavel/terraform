@@ -2,29 +2,33 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
+resource "azurerm_resource_group" "rg-demo-test-westeurope-001" {
+  name     = "rg-demo-test-westeurope-001"
   location = "West Europe"
+
+  tags = {
+    env = "tf_demo"
+  }
 }
 
-resource "azurerm_virtual_network" "example" {
+resource "azurerm_virtual_network" "vnet-demo-test-westeurope-001" {
   name                = "example-network"
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.rg-demo-test-westeurope-001.name
+  location            = azurerm_resource_group.rg-demo-test-westeurope-001.location
   address_space       = ["10.0.0.0/16"]
 }
 
-resource "azurerm_subnet" "internal" {
+resource "azurerm_subnet" "snet-demo-test-westeurope-001" {
   name                 = "internal"
-  resource_group_name  = azurerm_resource_group.example.name
-  virtual_network_name = azurerm_virtual_network.example.name
+  resource_group_name  = azurerm_resource_group.rg-demo-test-westeurope-001.name
+  virtual_network_name = azurerm_virtual_network.vnet-demo-test-westeurope-001.name
   address_prefixes     = ["10.0.2.0/24"]
 }
 
-resource "azurerm_linux_virtual_machine_scale_set" "example" {
-  name                = "example-vmss"
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
+resource "azurerm_linux_virtual_machine_scale_set" "vmss-demo-test-westeurope-001" {
+  name                = "vmss-demo-test-westeurope-001"
+  resource_group_name = azurerm_resource_group.rg-demo-test-westeurope-001.name
+  location            = azurerm_resource_group.rg-demo-test-westeurope-001.location
   sku                 = "Standard_F2"
   instances           = 1
   admin_username      = "steph"
@@ -37,7 +41,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "example" {
   source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
+    sku       = "18.04-LTS"
     version   = "latest"
   }
 
@@ -47,13 +51,13 @@ resource "azurerm_linux_virtual_machine_scale_set" "example" {
   }
 
   network_interface {
-    name    = "example"
+    name    = "nic-demo-test-westeurope-001"
     primary = true
 
     ip_configuration {
-      name      = "internal"
+      name      = "ipcfg-demo-test-westeurope-001"
       primary   = true
-      subnet_id = azurerm_subnet.internal.id
+      subnet_id = azurerm_subnet.snet-demo-test-westeurope-001.id
     }
   }
 }
