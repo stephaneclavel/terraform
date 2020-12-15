@@ -90,16 +90,7 @@ resource "azurerm_network_interface" "nic-demo-test-westeurope-001" {
     name                          = "nicipconfig"
     subnet_id                     = azurerm_subnet.snet-demo-test-westeurope-001.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.pip-demo-test-westeurope-001.id
   }
-}
-
-resource "azurerm_public_ip" "pip-demo-test-westeurope-001" {
-  name                = "pip-demo-test-westeurope-001"
-  location            = azurerm_resource_group.rg-demo-test-westeurope-001.location
-  resource_group_name = azurerm_network_security_group.nsg-demo-test-westeurope-001.resource_group_name
-  allocation_method   = "Static"
-  ip_version          = "IPv4"
 }
 
 resource "random_string" "storageaccountname" {
