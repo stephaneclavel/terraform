@@ -1,7 +1,7 @@
 locals {
   spoke1-location       = "westeurope"
   spoke1-resource-group = "spoke1-vnet-rg"
-  prefix-spoke1         = "spoke1-az104"
+  prefix         = "spoke1-az104"
 }
 
 resource "azurerm_resource_group" "spoke1-vnet-rg" {
@@ -10,7 +10,7 @@ resource "azurerm_resource_group" "spoke1-vnet-rg" {
 
   tags = {
     owner = "steph"
-    env = local.prefix-onprem
+    env = local.prefix
   }
 
 }
@@ -51,20 +51,20 @@ resource "azurerm_virtual_network_peering" "spoke1-hub-peer" {
 }
 
 resource "azurerm_network_interface" "spoke1-nic" {
-  name                 = "${local.prefix-spoke1}-nic"
+  name                 = "${local.prefix}-nic"
   location             = azurerm_resource_group.spoke1-vnet-rg.location
   resource_group_name  = azurerm_resource_group.spoke1-vnet-rg.name
   enable_ip_forwarding = true
 
   ip_configuration {
-    name                          = local.prefix-spoke1
+    name                          = local.prefix
     subnet_id                     = azurerm_subnet.spoke1-mgmt.id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
 resource "azurerm_virtual_machine" "spoke1-vm" {
-  name                  = "${local.prefix-spoke1}-vm"
+  name                  = "${local.prefix}-vm"
   location              = azurerm_resource_group.spoke1-vnet-rg.location
   resource_group_name   = azurerm_resource_group.spoke1-vnet-rg.name
   network_interface_ids = [azurerm_network_interface.spoke1-nic.id]
@@ -85,7 +85,7 @@ resource "azurerm_virtual_machine" "spoke1-vm" {
   }
 
   os_profile {
-    computer_name  = "${local.prefix-spoke1}-vm"
+    computer_name  = "${local.prefix}-vm"
     admin_username = var.username
     admin_password = var.password
   }

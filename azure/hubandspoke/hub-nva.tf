@@ -1,28 +1,27 @@
 locals {
-  prefix-hub-nva         = "hub-nva-az104"
+  prefix         = "hub-az104"
   hub-nva-location       = "westeurope"
-  hub-nva-resource-group = "hub-nva-rg"
 }
 
 resource "azurerm_resource_group" "hub-nva-rg" {
-  name     = "${local.prefix-hub-nva}-rg"
+  name     = "${local.prefix}-rg"
   location = local.hub-nva-location
 
   tags = {
     owner = "steph"
-    env = local.prefix-onprem
+    env = local.prefix
   }
 
 }
 
 resource "azurerm_network_interface" "hub-nva-nic" {
-  name                 = "${local.prefix-hub-nva}-nic"
+  name                 = "${local.prefix}-nic"
   location             = azurerm_resource_group.hub-nva-rg.location
   resource_group_name  = azurerm_resource_group.hub-nva-rg.name
   enable_ip_forwarding = true
 
   ip_configuration {
-    name                          = local.prefix-hub-nva
+    name                          = local.prefix
     subnet_id                     = azurerm_subnet.hub-dmz.id
     private_ip_address_allocation = "Static"
     private_ip_address            = "10.0.0.36"
@@ -31,7 +30,7 @@ resource "azurerm_network_interface" "hub-nva-nic" {
 }
 
 resource "azurerm_virtual_machine" "hub-nva-vm" {
-  name                  = "${local.prefix-hub-nva}-vm"
+  name                  = "${local.prefix}-vm"
   location              = azurerm_resource_group.hub-nva-rg.location
   resource_group_name   = azurerm_resource_group.hub-nva-rg.name
   network_interface_ids = [azurerm_network_interface.hub-nva-nic.id]
@@ -52,7 +51,7 @@ resource "azurerm_virtual_machine" "hub-nva-vm" {
   }
 
   os_profile {
-    computer_name  = "${local.prefix-hub-nva}-vm"
+    computer_name  = "${local.prefix}-vm"
     admin_username = var.username
   }
 
@@ -111,7 +110,7 @@ resource "azurerm_route_table" "hub-gateway-rt" {
   }
 
   tags = {
-    environment = local.prefix-hub-nva
+    environment = local.prefix
   }
 }
 
