@@ -10,13 +10,13 @@ resource "azurerm_resource_group" "spoke2-vnet-rg" {
 
   tags = {
     owner = "steph"
-    env = local.prefix-onprem
+    env = local.prefix-spoke2
   }
 
 }
 
 resource "azurerm_virtual_network" "spoke2-vnet" {
-  name                = "${local.prefix-spoke2}-vnet"
+  name                = "spoke2-vnet"
   location            = azurerm_resource_group.spoke2-vnet-rg.location
   resource_group_name = azurerm_resource_group.spoke2-vnet-rg.name
   address_space       = ["10.2.0.0/16"]

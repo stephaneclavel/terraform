@@ -11,7 +11,7 @@ resource "azurerm_resource_group" "hub-vnet-rg" {
 
   tags = {
     owner = "steph"
-    env   = local.prefix-onprem
+    env   = local.prefix-hub
   }
 }
 

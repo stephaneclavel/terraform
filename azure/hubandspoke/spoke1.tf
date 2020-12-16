@@ -10,7 +10,7 @@ resource "azurerm_resource_group" "spoke1-vnet-rg" {
 
   tags = {
     owner = "steph"
-    env = local.prefix-onprem
+    env = local.prefix-spoke1
   }
 
 }
