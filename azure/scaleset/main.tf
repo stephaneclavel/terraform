@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "rg-demo-test-westeurope-001" {
 }
 
 resource "azurerm_virtual_network" "vnet-demo-test-westeurope-001" {
-  name                = "example-network"
+  name                = "vnet-demo-test-westeurope-001"
   resource_group_name = azurerm_resource_group.rg-demo-test-westeurope-001.name
   location            = azurerm_resource_group.rg-demo-test-westeurope-001.location
   address_space       = ["10.0.0.0/16"]
