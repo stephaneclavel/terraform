@@ -10,7 +10,7 @@ resource "azurerm_resource_group" "spoke1-vnet-rg" {
 
   tags = {
     owner = "steph"
-    env = local.prefix-spoke1
+    env   = local.prefix-spoke1
   }
 
 }
@@ -44,10 +44,10 @@ resource "azurerm_virtual_network_peering" "spoke1-hub-peer" {
   remote_virtual_network_id = azurerm_virtual_network.hub-vnet.id
 
   allow_virtual_network_access = true
-  allow_forwarded_traffic = true
-  allow_gateway_transit   = false
-  use_remote_gateways     = true
-  depends_on = [azurerm_virtual_network.spoke1-vnet, azurerm_virtual_network.hub-vnet , azurerm_virtual_network_gateway.hub-vnet-gateway]
+  allow_forwarded_traffic      = true
+  allow_gateway_transit        = false
+  use_remote_gateways          = true
+  depends_on                   = [azurerm_virtual_network.spoke1-vnet, azurerm_virtual_network.hub-vnet, azurerm_virtual_network_gateway.hub-vnet-gateway]
 }
 
 resource "azurerm_network_interface" "spoke1-nic" {
@@ -64,11 +64,12 @@ resource "azurerm_network_interface" "spoke1-nic" {
 }
 
 resource "azurerm_virtual_machine" "spoke1-vm" {
-  name                  = "${local.prefix-spoke1}-vm"
-  location              = azurerm_resource_group.spoke1-vnet-rg.location
-  resource_group_name   = azurerm_resource_group.spoke1-vnet-rg.name
-  network_interface_ids = [azurerm_network_interface.spoke1-nic.id]
-  vm_size               = var.vmsize
+  name                          = "${local.prefix-spoke1}-vm"
+  location                      = azurerm_resource_group.spoke1-vnet-rg.location
+  resource_group_name           = azurerm_resource_group.spoke1-vnet-rg.name
+  network_interface_ids         = [azurerm_network_interface.spoke1-nic.id]
+  vm_size                       = var.vmsize
+  delete_os_disk_on_termination = true
 
   storage_image_reference {
     publisher = "Canonical"
@@ -97,13 +98,13 @@ resource "azurerm_virtual_machine" "spoke1-vm" {
 }
 
 resource "azurerm_virtual_network_peering" "hub-spoke1-peer" {
-  name                      = "hub-spoke1-peer"
-  resource_group_name       = azurerm_resource_group.hub-vnet-rg.name
-  virtual_network_name      = azurerm_virtual_network.hub-vnet.name
-  remote_virtual_network_id = azurerm_virtual_network.spoke1-vnet.id
+  name                         = "hub-spoke1-peer"
+  resource_group_name          = azurerm_resource_group.hub-vnet-rg.name
+  virtual_network_name         = azurerm_virtual_network.hub-vnet.name
+  remote_virtual_network_id    = azurerm_virtual_network.spoke1-vnet.id
   allow_virtual_network_access = true
-  allow_forwarded_traffic   = true
-  allow_gateway_transit     = true
-  use_remote_gateways       = false
-  depends_on = [azurerm_virtual_network.spoke1-vnet, azurerm_virtual_network.hub-vnet, azurerm_virtual_network_gateway.hub-vnet-gateway]
+  allow_forwarded_traffic      = true
+  allow_gateway_transit        = true
+  use_remote_gateways          = false
+  depends_on                   = [azurerm_virtual_network.spoke1-vnet, azurerm_virtual_network.hub-vnet, azurerm_virtual_network_gateway.hub-vnet-gateway]
 }
