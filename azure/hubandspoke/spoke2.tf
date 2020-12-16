@@ -1,7 +1,7 @@
 locals {
   spoke2-location       = "westeurope"
   spoke2-resource-group = "spoke2-vnet-rg"
-  prefix         = "spoke2-az104"
+  prefix-spoke2         = "spoke2-az104"
 }
 
 resource "azurerm_resource_group" "spoke2-vnet-rg" {
@@ -10,13 +10,13 @@ resource "azurerm_resource_group" "spoke2-vnet-rg" {
 
   tags = {
     owner = "steph"
-    env = local.prefix
+    env = local.prefix-onprem
   }
 
 }
 
 resource "azurerm_virtual_network" "spoke2-vnet" {
-  name                = "spoke2-vnet"
+  name                = "${local.prefix-spoke2}-vnet"
   location            = azurerm_resource_group.spoke2-vnet-rg.location
   resource_group_name = azurerm_resource_group.spoke2-vnet-rg.name
   address_space       = ["10.2.0.0/16"]
@@ -38,7 +38,7 @@ resource "azurerm_subnet" "spoke2-workload" {
 }
 
 resource "azurerm_virtual_network_peering" "spoke2-hub-peer" {
-  name                      = "${local.prefix}-hub-peer"
+  name                      = "${local.prefix-spoke2}-hub-peer"
   resource_group_name       = azurerm_resource_group.spoke2-vnet-rg.name
   virtual_network_name      = azurerm_virtual_network.spoke2-vnet.name
   remote_virtual_network_id = azurerm_virtual_network.hub-vnet.id
@@ -51,13 +51,13 @@ resource "azurerm_virtual_network_peering" "spoke2-hub-peer" {
 }
 
 resource "azurerm_network_interface" "spoke2-nic" {
-  name                 = "${local.prefix}-nic"
+  name                 = "${local.prefix-spoke2}-nic"
   location             = azurerm_resource_group.spoke2-vnet-rg.location
   resource_group_name  = azurerm_resource_group.spoke2-vnet-rg.name
   enable_ip_forwarding = true
 
   ip_configuration {
-    name                          = local.prefix
+    name                          = local.prefix-spoke2
     subnet_id                     = azurerm_subnet.spoke2-mgmt.id
     private_ip_address_allocation = "Dynamic"
   }
@@ -65,7 +65,7 @@ resource "azurerm_network_interface" "spoke2-nic" {
 }
 
 resource "azurerm_virtual_machine" "spoke2-vm" {
-  name                  = "${local.prefix}-vm"
+  name                  = "${local.prefix-spoke2}-vm"
   location              = azurerm_resource_group.spoke2-vnet-rg.location
   resource_group_name   = azurerm_resource_group.spoke2-vnet-rg.name
   network_interface_ids = [azurerm_network_interface.spoke2-nic.id]
@@ -86,7 +86,7 @@ resource "azurerm_virtual_machine" "spoke2-vm" {
   }
 
   os_profile {
-    computer_name  = "${local.prefix}-vm"
+    computer_name  = "${local.prefix-spoke2}-vm"
     admin_username = var.username
     admin_password = var.password
   }
