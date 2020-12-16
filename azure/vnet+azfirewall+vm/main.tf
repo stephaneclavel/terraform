@@ -1,6 +1,14 @@
 provider "azurerm" {
-  version = "2.9.0"
   features {}
+  version = "~> 2.40.0"
+}
+
+provider "random" {
+  version = "~> 3.0.0"
+}
+
+provider "template" {
+  version = "~> 2.2.0"
 }
 
 #create resource group
@@ -159,4 +167,6 @@ resource "azurerm_virtual_machine" "vm-demo-test-westeurope-001" {
     }
   }
 
+  # explicit dependencies on az fw nat rules so that vm can dns and www to package repos to install web server
+  depends_on = [azurerm_firewall_nat_rule_collection.natrc-demo-test-westeurope-001, azurerm_firewall_nat_rule_collection.natrc-demo-test-westeurope-002]
 }
