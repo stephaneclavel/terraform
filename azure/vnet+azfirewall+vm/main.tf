@@ -1,14 +1,22 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 2.40.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0.0"
+    }
+    template = {
+      source  = "hashicorp/template"
+      version = "~> 2.2.0"
+    }
+  }
+}
+
 provider "azurerm" {
   features {}
-  version = "~> 2.40.0"
-}
-
-provider "random" {
-  version = "~> 3.0.0"
-}
-
-provider "template" {
-  version = "~> 2.2.0"
 }
 
 #create resource group
