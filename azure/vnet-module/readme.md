@@ -1,1 +1,1 @@
-example using a module, creates a rg, vnet, subnets, nsg, rt, route
+example using a public module, creates a rg, vnet, subnets, nsg, rt, route
