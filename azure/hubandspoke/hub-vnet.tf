@@ -11,7 +11,7 @@ resource "azurerm_resource_group" "hub-vnet-rg" {
 
   tags = {
     owner = "steph"
-    env   = local.prefix-onprem
+    env   = local.prefix-hub
   }
 }
 
@@ -60,11 +60,12 @@ resource "azurerm_network_interface" "hub-nic" {
 
 #Virtual Machine
 resource "azurerm_virtual_machine" "hub-vm" {
-  name                  = "${local.prefix-hub}-vm"
-  location              = azurerm_resource_group.hub-vnet-rg.location
-  resource_group_name   = azurerm_resource_group.hub-vnet-rg.name
-  network_interface_ids = [azurerm_network_interface.hub-nic.id]
-  vm_size               = var.vmsize
+  name                          = "${local.prefix-hub}-vm"
+  location                      = azurerm_resource_group.hub-vnet-rg.location
+  resource_group_name           = azurerm_resource_group.hub-vnet-rg.name
+  network_interface_ids         = [azurerm_network_interface.hub-nic.id]
+  vm_size                       = var.vmsize
+  delete_os_disk_on_termination = true
 
   storage_image_reference {
     publisher = "Canonical"

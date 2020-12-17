@@ -10,7 +10,7 @@ resource "azurerm_resource_group" "hub-nva-rg" {
 
   tags = {
     owner = "steph"
-    env = local.prefix-onprem
+    env   = local.prefix-hub-nva
   }
 
 }
@@ -31,11 +31,12 @@ resource "azurerm_network_interface" "hub-nva-nic" {
 }
 
 resource "azurerm_virtual_machine" "hub-nva-vm" {
-  name                  = "${local.prefix-hub-nva}-vm"
-  location              = azurerm_resource_group.hub-nva-rg.location
-  resource_group_name   = azurerm_resource_group.hub-nva-rg.name
-  network_interface_ids = [azurerm_network_interface.hub-nva-nic.id]
-  vm_size               = var.vmsize
+  name                          = "${local.prefix-hub-nva}-vm"
+  location                      = azurerm_resource_group.hub-nva-rg.location
+  resource_group_name           = azurerm_resource_group.hub-nva-rg.name
+  network_interface_ids         = [azurerm_network_interface.hub-nva-nic.id]
+  vm_size                       = var.vmsize
+  delete_os_disk_on_termination = true
 
   storage_image_reference {
     publisher = "Canonical"
@@ -59,8 +60,8 @@ resource "azurerm_virtual_machine" "hub-nva-vm" {
   os_profile_linux_config {
     disable_password_authentication = true
     ssh_keys {
-        path     = "/home/steph/.ssh/authorized_keys"
-        key_data = file("~/.ssh/id_rsa.pub")
+      path     = "/home/steph/.ssh/authorized_keys"
+      key_data = file("~/.ssh/id_rsa.pub")
     }
   }
 
@@ -118,7 +119,7 @@ resource "azurerm_route_table" "hub-gateway-rt" {
 resource "azurerm_subnet_route_table_association" "hub-gateway-rt-hub-vnet-gateway-subnet" {
   subnet_id      = azurerm_subnet.hub-gateway-subnet.id
   route_table_id = azurerm_route_table.hub-gateway-rt.id
-  depends_on = [azurerm_subnet.hub-gateway-subnet]
+  depends_on     = [azurerm_subnet.hub-gateway-subnet]
 }
 
 resource "azurerm_route_table" "spoke1-rt" {
@@ -145,13 +146,13 @@ resource "azurerm_route_table" "spoke1-rt" {
 resource "azurerm_subnet_route_table_association" "spoke1-rt-spoke1-vnet-mgmt" {
   subnet_id      = azurerm_subnet.spoke1-mgmt.id
   route_table_id = azurerm_route_table.spoke1-rt.id
-  depends_on = [azurerm_subnet.spoke1-mgmt]
+  depends_on     = [azurerm_subnet.spoke1-mgmt]
 }
 
 resource "azurerm_subnet_route_table_association" "spoke1-rt-spoke1-vnet-workload" {
   subnet_id      = azurerm_subnet.spoke1-workload.id
   route_table_id = azurerm_route_table.spoke1-rt.id
-  depends_on = [azurerm_subnet.spoke1-workload]
+  depends_on     = [azurerm_subnet.spoke1-workload]
 }
 
 resource "azurerm_route_table" "spoke2-rt" {
@@ -178,11 +179,11 @@ resource "azurerm_route_table" "spoke2-rt" {
 resource "azurerm_subnet_route_table_association" "spoke2-rt-spoke2-vnet-mgmt" {
   subnet_id      = azurerm_subnet.spoke2-mgmt.id
   route_table_id = azurerm_route_table.spoke2-rt.id
-  depends_on = [azurerm_subnet.spoke2-mgmt]
+  depends_on     = [azurerm_subnet.spoke2-mgmt]
 }
 
 resource "azurerm_subnet_route_table_association" "spoke2-rt-spoke2-vnet-workload" {
   subnet_id      = azurerm_subnet.spoke2-workload.id
   route_table_id = azurerm_route_table.spoke2-rt.id
-  depends_on = [azurerm_subnet.spoke2-workload]
+  depends_on     = [azurerm_subnet.spoke2-workload]
 }
