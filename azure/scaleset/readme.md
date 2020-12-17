@@ -11,6 +11,7 @@ Apply complete! Resources: 15 added, 0 changed, 0 destroyed.
 Outputs:
 
 vmss_public_fqdn = hztehb.westeurope.cloudapp.azure.com
+
 [steph@centos7-2 scaleset]$ curl hztehb.westeurope.cloudapp.azure.com
 <h1>Demo Bootstrapping Azure Virtual Machine vmss-demo-test-westeurope-001000003</h1>
 [steph@centos7-2 scaleset]$ curl hztehb.westeurope.cloudapp.azure.com
