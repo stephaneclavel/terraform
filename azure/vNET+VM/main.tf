@@ -1,5 +1,21 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 2.40.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0.0"
+    }
+    template = {
+      source  = "hashicorp/template"
+      version = "~> 2.2.0"
+    }
+  }
+}
+
 provider "azurerm" {
-  version = "2.9.0"
   features {}
 }
 
@@ -127,45 +143,37 @@ data "template_file" "linux-vm-cloud-init" {
   template = file("install-apache2.sh")
 }
 
-resource "azurerm_virtual_machine" "vm-demo-test-westeurope-001" {
-  name                          = "vm-demo-test-westeurope-001"
-  location                      = var.location
-  resource_group_name           = azurerm_resource_group.rg-demo-test-westeurope-001.name
-  network_interface_ids         = [azurerm_network_interface.nic-demo-test-westeurope-001.id]
-  vm_size                       = "Standard_DS1_v2"
-  delete_os_disk_on_termination = true
+resource "azurerm_linux_virtual_machine" "vm-demo-test-westeurope-001" {
+  name                  = "vm-demo-test-westeurope-001"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.rg-demo-test-westeurope-001.name
+  network_interface_ids = [azurerm_network_interface.nic-demo-test-westeurope-001.id]
+  size                  = "Standard_DS1_v2"
+  admin_username        = "steph"
+  custom_data           = base64encode(data.template_file.linux-vm-cloud-init.rendered)
+  priority              = "Spot"
+  eviction_policy       = "Deallocate"
 
-  storage_image_reference {
+  source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "18.04-LTS"
     version   = "latest"
   }
 
-  storage_os_disk {
-    name              = "disk1"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
+  os_disk {
+    name                 = "vm-demo-test-westeurope-001-os-disk"
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
   }
 
   boot_diagnostics {
-    enabled     = true
-    storage_uri = azurerm_storage_account.st-demo-test-westeurope-001.primary_blob_endpoint
+    storage_account_uri = azurerm_storage_account.st-demo-test-westeurope-001.primary_blob_endpoint
   }
 
-  os_profile {
-    computer_name  = "vm-demo-test-westeurope-001"
-    admin_username = "steph"
-    custom_data = base64encode(data.template_file.linux-vm-cloud-init.rendered)
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = true
-    ssh_keys {
-      path     = "/home/steph/.ssh/authorized_keys"
-      key_data = file("~/.ssh/id_rsa.pub")
-    }
+  admin_ssh_key {
+    username   = "steph"
+    public_key = file("~/.ssh/id_rsa.pub")
   }
 
 }
