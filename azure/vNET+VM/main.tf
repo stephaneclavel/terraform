@@ -151,6 +151,8 @@ resource "azurerm_linux_virtual_machine" "vm-demo-test-westeurope-001" {
   size                  = "Standard_DS1_v2"
   admin_username        = "steph"
   custom_data           = base64encode(data.template_file.linux-vm-cloud-init.rendered)
+  priority              = "Spot"
+  eviction_policy       = "Deallocate"
 
   source_image_reference {
     publisher = "Canonical"
