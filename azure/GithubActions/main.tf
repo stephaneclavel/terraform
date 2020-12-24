@@ -21,7 +21,7 @@ terraform {
 resource "azurerm_resource_group" "rg-github-actions" {
   name     = "rg-github-actions"
   location = "westeurope"
-
+ 
   tags = {
     env = "github-actions-demo"
   }
