@@ -1,4 +1,4 @@
-adapted from: 
+adapted from:
 https://www.blendmastersoftware.com/blog/deploying-to-azure-using-terraform-and-github-actions
 
 changes:
