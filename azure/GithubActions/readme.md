@@ -1,6 +1,6 @@
 adapted from:
 https://www.blendmastersoftware.com/blog/deploying-to-azure-using-terraform-and-github-actions
-
+ 
 changes:
 - added actions to open/close Az storage account (used for TF remote state) firewall on the fly
 - TF 0.14 provider reqs
