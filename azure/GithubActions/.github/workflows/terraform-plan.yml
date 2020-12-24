@@ -26,8 +26,9 @@ jobs:
           creds: ${{secrets.AZURE_CREDENTIALS}}
 
       - name: open Az storage fw
-        run: export mypublicip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
-        run: az storage account network-rule add --resource-group "tstate" --account-name "tstate25079" --ip-address $mypublicip
+        run: | 
+          export mypublicip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+          az storage account network-rule add --resource-group "tstate" --account-name "tstate25079" --ip-address $mypublicip
 
       - name: Terraform Init
         run: terraform init -backend-config="access_key=$(az storage account keys list --resource-group "tstate" --account-name "tstate25079" --query '[0].value' -o tsv)"
