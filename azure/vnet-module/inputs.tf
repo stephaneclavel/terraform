@@ -1,14 +1,19 @@
-provider "azurerm" {
-  features {}
+locals {
+  common_tags = {
+    env   = var.env
+    owner = var.owner
+  }
+}
+
+data "http" "my_ip" {
+  url = "http://ifconfig.me"
 }
 
 resource "azurerm_resource_group" "rg-demo-test-westeurope-001" {
   name     = "rg-demo-test-westeurope-001"
   location = "westeurope"
 
-  tags = {
-    env = "tf-demo"
-  }
+  tags = local.common_tags
 
 }
 
@@ -18,6 +23,7 @@ module "vnet" {
   address_space       = ["10.0.0.0/16"]
   subnet_prefixes     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   subnet_names        = ["subnet1", "subnet2", "subnet3"]
+  vnet_name           = "vnet-demo-test-westeurope-001"
 
   nsg_ids = {
     subnet1 = azurerm_network_security_group.nsg-demo-test-westeurope-001.id
@@ -40,7 +46,7 @@ module "vnet" {
     env = "tf-demo"
   }
 
-  depends_on = [azurerm_resource_group.rg-demo-test-westeurope-001]
+  #  depends_on = [azurerm_resource_group.rg-demo-test-westeurope-001]
 }
 
 resource "azurerm_network_security_group" "nsg-demo-test-westeurope-001" {
@@ -57,7 +63,7 @@ resource "azurerm_network_security_group" "nsg-demo-test-westeurope-001" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "*"
+    source_address_prefix      = data.http.my_ip.body
     destination_address_prefix = "*"
   }
 
