@@ -1,6 +1,6 @@
 1/ set necessary env var to connect to Azure . ./set-azure-env-var.sh 
 
-2/ deploys RG, vnet, subnet, rules, NSG, pip, nic, storage account (for boot diag), spot linux vm and web server. 
+2/ deploys RG, vnet, subnet, rules, NSG, pip, nic, storage account (for boot diag), spot linux vm and web server. Tests connectivity to VM via web and http. 
 
 Note: if spot VMs are not available at the moment you deploy in the selected region, deployment will fail: 
 
