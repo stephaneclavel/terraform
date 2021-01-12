@@ -1,6 +1,6 @@
 This set-up creates:
 
-on-prem vnet in Az region A, which includes 
+"on-prem" vnet in Az region A, which includes 
   - a linux vm 
   - a VPN gateway, connected to cloud hub vnet VPN gateway. 
 
