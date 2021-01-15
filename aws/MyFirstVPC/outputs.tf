@@ -14,10 +14,10 @@ output "private_instance_private_ip" {
 }
 
 output "public_cidrs" {
-  value       = module.base-network.public_subnet_cidr_blocks
+  value = module.base-network.public_subnet_cidr_blocks
 }
 
 output "private_cidrs" {
-  value       = module.base-network.private_subnet_cidr_blocks
+  value = module.base-network.private_subnet_cidr_blocks
 }
 
