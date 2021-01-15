@@ -9,8 +9,7 @@ module "demo_sg" {
   description = "Security group to allow inbound ssh from client ip"
   vpc_id      = module.base-network.vpc_id
 
-  #ingress_cidr_blocks = [var.vpc_cidr]
-  ingress_cidr_blocks = ["${data.http.my_ip.body}/32",module.base-network.public_subnet_cidr_blocks[0]]
+  ingress_cidr_blocks = ["${data.http.my_ip.body}/32", module.base-network.public_subnet_cidr_blocks[0], module.base-network.public_subnet_cidr_blocks[1]]
   #  ingress_rules            = ["https-443-tcp"]
   ingress_with_cidr_blocks = [
     {
