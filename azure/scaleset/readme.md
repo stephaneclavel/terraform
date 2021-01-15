@@ -1,8 +1,8 @@
-creates a vmss with 2 instances in different AZ, vnet, nsg, lb with public ip address
+creates a VMSS (VM Scale Set) with 2 instances in different AZ (Availability zones), vnet, nsg, lb with public ip address
 
-instances run a web server, lb public ip fqdn is returned as an output
+instances run a web server, LB public ip fqdn is returned as an output
 
-instance hostname is displayed on default web page to illustrate lb capability
+instance hostname is displayed on default web page to illustrate LB capability
 
 --
 
