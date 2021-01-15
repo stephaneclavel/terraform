@@ -2,7 +2,7 @@ module "base-network" {
   source  = "infrablocks/base-networking/aws"
   version = "2.3.0"
 
-  vpc_cidr           = "10.0.0.0/16"
+  vpc_cidr           = var.vpc_cidr
   region             = "eu-west-3"
   availability_zones = ["eu-west-3a", "eu-west-3b"]
 
