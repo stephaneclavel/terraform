@@ -1,4 +1,4 @@
-!! At this stage one must go to console and associate private subnets with custom RT pointing to NAT instance !!
+!! At this stage one must go to console and associate private subnets with custom RT pointing to NAT instance !! See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association#import
 
 Objective is to deploy VPC as seen in AWS Certified Solutions Architect Associate SAA-C02 course https://linuxacademy.com/cp/modules/view/id/630 or similar to below set-up, leveraging existing TF modules. 
 
@@ -10,11 +10,11 @@ This will deploy 1 VPC, 2 public subnets (1 per AZ), 2 private subnets (1 per AZ
 - 1 private instance
 
 Test: 
-SSH to jumpbox
+1/ SSH to jumpbox
 ssh -i "/home/steph/mynewkeypair.pem" ec2-user@ec2-35-180-54-230.eu-west-3.compute.amazonaws.com
-then to private instance (push your ssh key on jumpbox)
+2/ then to private instance (push your ssh key on jumpbox)
 [ec2-user@ip-10-0-0-80 ~]$ ssh -i mynewkeypair.pem 10.0.2.13
-Test internet connectivity from this instance (sudo yum update)
+3/ Test internet connectivity from this instance (sudo yum update)
 [ec2-user@ip-10-0-2-13 ~]$ sudo yum update
 Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
 amzn2-core                                                                                   | 3.7 kB  00:00:00
