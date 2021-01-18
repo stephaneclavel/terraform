@@ -12,6 +12,7 @@ See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/
 You can either:
 - go to console and associate private subnets with custom RT pointing to NAT instance
 - or you could also uncomment 4 lines route_table_association ressource in private-route-table.tf file and run "terraform import aws_route_table_association.custom_private_subnet_0 <private-subnet-id>/<custom-private-RT-id>" the ids are part of outputs. 
+!! or select another TF module that allows to modify main RT !! 
 
 Test: 
 1/ SSH to jumpbox
