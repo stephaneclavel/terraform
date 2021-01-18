@@ -1,5 +1,3 @@
-!! At this stage one must go to console and associate private subnets with custom RT pointing to NAT instance !! See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association#import
-
 Objective is to deploy VPC as seen in AWS Certified Solutions Architect Associate SAA-C02 course https://linuxacademy.com/cp/modules/view/id/630 or similar to below set-up, leveraging existing TF modules. 
 
 ![Image of setup](https://docs.aws.amazon.com/vpc/latest/userguide/images/nat-instance-diagram.png)
@@ -8,6 +6,12 @@ This will deploy 1 VPC, 2 public subnets (1 per AZ), 2 private subnets (1 per AZ
 - 1 jumpbox in public subnet
 - 1 NAT instance in public subnet
 - 1 private instance
+
+!! Manual steps !! 
+See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association#import
+You can either:
+- go to console and associate private subnets with custom RT pointing to NAT instance
+- or you could also uncomment 4 lines route_table_association ressource in private-route-table.tf file and run "terraform import aws_route_table_association.custom_private_subnet_0 <private-subnet-id>/<custom-private-RT-id>" the ids are part of outputs. 
 
 Test: 
 1/ SSH to jumpbox
