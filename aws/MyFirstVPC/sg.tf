@@ -16,6 +16,38 @@ module "demo_sg" {
       to_port     = 22
       protocol    = "tcp"
       description = "ssh"
+    },
+    {
+      #rule        = "http-80-tcp"
+      cidr_blocks = module.base-network.private_subnet_cidr_blocks[0]
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      description = "http to nat gw"
+      #cidr_blocks = "10.0.2.0/24"
+    },
+    {
+      #rule        = "http-80-tcp"
+      cidr_blocks = module.base-network.private_subnet_cidr_blocks[1]
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      description = "http to nat gw"
+      #cidr_blocks = "10.0.2.0/24"
+    },
+    {
+      cidr_blocks = module.base-network.private_subnet_cidr_blocks[0]
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      description = "https to nat gw"
+    },
+    {
+      cidr_blocks = module.base-network.private_subnet_cidr_blocks[1]
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      description = "https to nat gw"
     }
   ]
   egress_cidr_blocks = ["0.0.0.0/0"]

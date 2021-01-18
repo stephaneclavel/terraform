@@ -13,11 +13,8 @@ output "private_instance_private_ip" {
   value       = module.ec2_private.private_ip
 }
 
-output "public_cidrs" {
-  value = module.base-network.public_subnet_cidr_blocks
-}
-
-output "private_cidrs" {
-  value = module.base-network.private_subnet_cidr_blocks
+output "public_nat_instance_private_ip" {
+  description = "Public instance NAT private IP address"
+  value       = module.ec2_nat.private_ip
 }
 
