@@ -4,14 +4,16 @@ Objective is to deploy VPC as seen in AWS Certified Solutions Architect Associat
 
 This will deploy 1 VPC, 2 public subnets (1 per AZ), 2 private subnets (1 per AZ), Internet GW, custom SG, 3 instances:
 - 1 jumpbox in public subnet
-- 1 NAT instance in public subnet
+- 1 NAT instance in public subnet (*)
 - 1 private instance
+
+(*) NAT gateway puts you out of AWS free tier. 
 
 !! Manual steps !! 
 See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association#import
 You can either:
 - go to console and associate private subnets with custom RT pointing to NAT instance
-- or you could also uncomment 4 lines route_table_association ressource in private-route-table.tf file and run "terraform import aws_route_table_association.custom_private_subnet_0 <private-subnet-id>/<custom-private-RT-id>" the ids are part of outputs. 
+- or you could also uncomment 4 lines route_table_association ressource in private-route-table.tf file and run "terraform import aws_route_table_association.custom_private_subnet_0 private-subnet-id/custom-private-RT-id" the ids are part of outputs. 
 !! or select another TF module that allows to modify main RT !! 
 
 Test: 
