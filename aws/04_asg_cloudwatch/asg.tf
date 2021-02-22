@@ -8,6 +8,7 @@ resource "aws_launch_template" "lt-001" {
   image_id               = aws_ami_from_instance.encrypted-web-server.id
   instance_type          = "t2.micro"
   vpc_security_group_ids = [module.inbound_ssh.this_security_group_id, module.unfiltered_http.this_security_group_id]
+  user_data = filebase64("bootstrap-web-base64.sh")
 }
 
 resource "aws_autoscaling_group" "asg-001" {
@@ -21,8 +22,8 @@ resource "aws_autoscaling_group" "asg-001" {
   placement_group           = aws_placement_group.pg_spread.id
   mixed_instances_policy {
     instances_distribution {
-      on_demand_base_capacity                  = 0
-      on_demand_percentage_above_base_capacity = 25
+      on_demand_base_capacity                  = 2
+      on_demand_percentage_above_base_capacity = 0
       spot_allocation_strategy                 = "capacity-optimized"
     }
 
