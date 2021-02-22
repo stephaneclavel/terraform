@@ -5,5 +5,5 @@ output "public_instance_dns" {
 
 output "alb_dns" {
   description = "ALB DNS value"
-  value = aws_lb.alb-001.dns_name
+  value       = aws_lb.alb-001.dns_name
 }
