@@ -1,0 +1,35 @@
+{
+    "Instances": [
+        {
+            "name": "ec2_public",
+            "instance_count": "1",
+            "ami": "ami-00798d7180f25aac2",
+	    "instance_type": "t2.micro",
+ 	    "associate_public_ip_address": "true",
+	    "key_name": "mynewkeypair",
+            "monitoring": "true",
+            "source_dest_check": "true"
+        },
+	{
+	    "name": "ec2_nat",
+            "instance_count": "1",
+            "ami": "ami-000d84e1c6fd278b9",
+            "instance_type": "t2.micro",
+            "associate_public_ip_address": "true",
+            "key_name": "mynewkeypair",
+            "monitoring": "true",
+            "source_dest_check": "false"
+	},
+        {
+            "name": "ec2_private",
+            "instance_count": "1",
+            "ami": "ami-00798d7180f25aac2",
+            "instance_type": "t2.micro",
+            "associate_public_ip_address": "false",
+            "key_name": "mynewkeypair",
+            "monitoring": "true",
+            "source_dest_check": "true"
+        }
+    ]
+}
+
