@@ -1,4 +1,6 @@
-Same project as 01_... but using count to loop EC2 instances creation. WIP as cant find proper way to address individual instance to get their data (private IP address for example)
+Same project as 01_... but using count to loop EC2 instances creation. WIP as cant find proper way to address individual instance to get their data (private IP address for example) see https://github.com/stephaneclavel/terraform/issues/19
+
+!!!!!!!!!!!!!!!!!!!!!!!!
 
 Objective is to deploy VPC as seen in AWS Certified Solutions Architect Associate SAA-C02 course https://linuxacademy.com/cp/modules/view/id/630 or similar to below set-up, leveraging existing TF modules. 
 
