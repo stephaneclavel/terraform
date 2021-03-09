@@ -1,7 +1,7 @@
 resource "aws_route_table" "custom_private_subnet_route_table" {
   vpc_id = module.base-network.vpc_id
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block  = "0.0.0.0/0"
     instance_id = module.ec2_nat.id[0]
   }
 }
