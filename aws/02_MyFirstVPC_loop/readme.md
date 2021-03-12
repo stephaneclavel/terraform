@@ -1,6 +1,6 @@
 ## Objective
 
-Same project as 01_... but using count to loop EC2 instances creation. 
+Same project as 01_... but using for_each to loop EC2 instances creation. 
 
 Objective is to deploy VPC as seen in AWS Certified Solutions Architect Associate SAA-C02 course https://linuxacademy.com/cp/modules/view/id/630 or similar to below set-up, leveraging existing TF modules. 
 
