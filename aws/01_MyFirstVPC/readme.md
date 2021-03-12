@@ -1,11 +1,17 @@
+## Objective
+
 Objective is to deploy VPC as seen in AWS Certified Solutions Architect Associate SAA-C02 course https://linuxacademy.com/cp/modules/view/id/630 or similar to below set-up, leveraging existing TF modules. 
 
 ![Image of setup](https://docs.aws.amazon.com/vpc/latest/userguide/images/nat-instance-diagram.png)
+
+## Outcomes
 
 This will deploy 1 VPC, 2 public subnets (1 per AZ), 2 private subnets (1 per AZ), Internet GW, custom SG, 3 instances:
 - 1 jumpbox in public subnet
 - 1 NAT instance in public subnet (*)
 - 1 private instance
+
+## Important notes
 
 (*) NAT gateway puts you out of AWS free tier. 
 
@@ -16,11 +22,14 @@ You can either:
 - or you could also uncomment 4 lines route_table_association ressource in private-route-table.tf file and run "terraform import aws_route_table_association.custom_private_subnet_0 private-subnet-id/custom-private-RT-id" the ids are part of outputs. 
 !! or select another TF module that allows to modify main RT (beyond time allocated for this project) !! 
 
-Test: 
+## Tests:
+
 1/ SSH to jumpbox
 ssh -i "/home/steph/mynewkeypair.pem" ec2-user@ec2-35-180-54-230.eu-west-3.compute.amazonaws.com
+
 2/ then to private instance (push your ssh key on jumpbox)
 [ec2-user@ip-10-0-0-80 ~]$ ssh -i mynewkeypair.pem 10.0.2.13
+
 3/ Test internet connectivity from this instance (sudo yum update)
 [ec2-user@ip-10-0-2-13 ~]$ sudo yum update
 Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
