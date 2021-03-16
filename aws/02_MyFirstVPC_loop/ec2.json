@@ -8,7 +8,8 @@
  	    "associate_public_ip_address": "true",
 	    "key_name": "mynewkeypair",
             "monitoring": "true",
-            "source_dest_check": "true"
+            "source_dest_check": "true",
+            "subnet": "$(module.base-network.public_subnet_ids[0])"
         },
 	{
 	    "name": "ec2_nat",
@@ -18,7 +19,8 @@
             "associate_public_ip_address": "true",
             "key_name": "mynewkeypair",
             "monitoring": "true",
-            "source_dest_check": "false"
+            "source_dest_check": "false",
+            "subnet": "$(module.base-network.public_subnet_ids[0])"
 	},
         {
             "name": "ec2_private",
@@ -28,7 +30,8 @@
             "associate_public_ip_address": "false",
             "key_name": "mynewkeypair",
             "monitoring": "true",
-            "source_dest_check": "true"
+            "source_dest_check": "true",
+            "subnet": "$(module.base-network.public_subnet_ids[0])"
         }
     ]
 }
