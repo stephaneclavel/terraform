@@ -8,7 +8,7 @@ Deploy Wordpress containers using ECS / EC2 behind AWS ELB (ALB). As is it does 
 
 Note: there is a reason why AWS created Fargate (way easier to set-up). 
 
-![alt text]https://github.com/stephaneclavel/terraform/blob/master/aws/06_ecs_ec2/diagram.png?raw=true
+![alt text](https://github.com/stephaneclavel/terraform/blob/master/aws/06_ecs_ec2/diagram.png?raw=true)
 
 ## Test
 
