@@ -9,3 +9,7 @@ Deploy NGINX containers using ECS / Fargate behind AWS ELB (ALB). Also creating 
 ## Test
 
 Connect to ALB URL (http) and get Nginx default web page. 
+
+## Note
+
+This project leverages remote TF backend, see providers.tf file. 

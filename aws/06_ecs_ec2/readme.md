@@ -11,3 +11,7 @@ Note: there is a reason why AWS created Fargate.
 ## Test
 
 Connect to ALB URL (http) and get WordPress default web page. 
+
+## Note
+
+This project leverages remote TF backend, see providers.tf file. 
