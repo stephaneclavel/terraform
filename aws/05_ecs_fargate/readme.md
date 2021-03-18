@@ -6,6 +6,8 @@ https://github.com/bradford-hamilton/terraform-ecs-fargate
 
 Deploy NGINX containers using ECS / Fargate behind AWS ELB (ALB). Also creating relevant log group. 
 
+![alt text](https://github.com/stephaneclavel/terraform/blob/master/aws/05_ecs_fargate/diagram.png?raw=true)
+
 ## Test
 
 Connect to ALB URL (http) and get Nginx default web page. 
