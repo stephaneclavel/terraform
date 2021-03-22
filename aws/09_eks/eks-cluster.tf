@@ -1,8 +1,13 @@
+data "http" "my_ip" {
+  url = "http://ifconfig.me"
+}
+
 module "eks" {
-  source          = "terraform-aws-modules/eks/aws"
-  cluster_name    = local.cluster_name
-  cluster_version = "1.18"
-  subnets         = module.vpc.private_subnets
+  source                               = "terraform-aws-modules/eks/aws"
+  cluster_name                         = local.cluster_name
+  cluster_version                      = "1.18"
+  subnets                              = module.vpc.private_subnets
+  cluster_endpoint_public_access_cidrs = ["${data.http.my_ip.body}/32"]
 
   tags = {
     Environment = "test"
