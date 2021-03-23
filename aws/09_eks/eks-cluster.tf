@@ -7,7 +7,7 @@ module "eks" {
   cluster_name                         = local.cluster_name
   cluster_version                      = "1.19"
   subnets                              = module.vpc.private_subnets
-  cluster_endpoint_public_access_cidrs = ["${data.http.my_ip.body}/32"]
+  cluster_endpoint_public_access_cidrs = ["${data.http.my_ip.body}/32","${module.vpc.nat_public_ips[0]}/32"]
   cluster_enabled_log_types            = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
   tags = {
