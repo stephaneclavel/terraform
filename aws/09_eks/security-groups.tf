@@ -24,7 +24,7 @@ resource "aws_security_group" "worker_group_mgmt_two" {
     protocol  = "tcp"
 
     cidr_blocks = [
-      "192.168.0.0/16",
+      "10.0.0.0/8",
     ]
   }
 }
