@@ -18,6 +18,8 @@ module "eks" {
 
   workers_group_defaults = {
     root_volume_type = "gp2"
+    health_check_type             = "EC2"
+    key_name                      = "mynewkeypair"
   }
 
   worker_groups = [
