@@ -9,13 +9,18 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = ">= 2.0.1"
     }
+
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 2.40.0"
+    }
   }
 
   backend "azurerm" {
     resource_group_name  = "tstate"
     storage_account_name = "tstate25079fr"
-    container_name       = "tstate-k8s"
-    key                  = "terraform.tfstate"
+    container_name       = "tstate"
+    key                  = "nginx-k8s.terraform.tfstate"
   }
 }
 
@@ -25,8 +30,8 @@ data "terraform_remote_state" "eks" {
   config = {
     resource_group_name  = "tstate"
     storage_account_name = "tstate25079fr"
-    container_name       = "tstate-eks"
-    key                  = "terraform.tfstate"
+    container_name       = "tstate"
+    key                  = "eks.terraform.tfstate"
   }
 }
 
