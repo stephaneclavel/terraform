@@ -9,6 +9,8 @@ Query API gateway to trigger Lambda function.
 Run script.xx and specify code version to run (1.0.0 or 1.0.1). 
 Run destroy.xx to clean-up. 
 
+![alt text](https://github.com/stephaneclavel/terraform/blob/master/aws/07_lambda/diagram.png?raw=true)
+
 Source: https://learn.hashicorp.com/tutorials/terraform/lambda-api-gateway?in=terraform/aws
 
 ## Test
