@@ -9,6 +9,9 @@ Slightly modified from: https://learn.hashicorp.com/tutorials/terraform/eks Adde
 Removed SSH remote access to use AWS SSM. See:
 https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html
 
+Workers nodes use WorkerNodesSSM IAM role. WorkerNodesSSM IAM role and instances profile have SSM and necessary EKS worker nodes permissions assigned:
+![alt text](https://github.com/stephaneclavel/terraform/blob/master/aws/09_eks/iam-role.png?raw=true)
+
 ## Test
 
 Run get-credentials.sh and test access with kubectl get nodes for example. 
