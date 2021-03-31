@@ -26,7 +26,7 @@ module "eks" {
     #install SSM agent and disable ssh access
     additional_userdata = "yum install -y https://s3.eu-west-3.amazonaws.com/amazon-ssm-eu-west-3/latest/linux_amd64/amazon-ssm-agent.rpm"
     #key_name                      = "mynewkeypair"
-    iam_instance_profile_name   = var.role_instance_profile
+    iam_instance_profile_name = var.role_instance_profile
   }
 
   worker_groups = [

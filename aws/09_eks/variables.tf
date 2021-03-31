@@ -5,5 +5,5 @@ variable "region" {
 
 variable "role_instance_profile" {
   description = "Worker nodes role and instance profile name"
-  default = "EksWorkerNodesSsm"
+  default     = "EksWorkerNodesSsm"
 }
