@@ -17,7 +17,7 @@ module "eks" {
 
   vpc_id = module.vpc.vpc_id
 
-  workers_role_name           = "WorkerNodesSSM"
+  workers_role_name           = var.role_instance_profile
   manage_worker_iam_resources = false
 
   workers_group_defaults = {
@@ -26,7 +26,7 @@ module "eks" {
     #install SSM agent and disable ssh access
     additional_userdata = "yum install -y https://s3.eu-west-3.amazonaws.com/amazon-ssm-eu-west-3/latest/linux_amd64/amazon-ssm-agent.rpm"
     #key_name                      = "mynewkeypair"
-    iam_instance_profile_name   = "WorkerNodesSSM"
+    iam_instance_profile_name   = var.role_instance_profile
   }
 
   worker_groups = [
