@@ -148,7 +148,7 @@ resource "azurerm_linux_virtual_machine" "vm-demo-test-westeurope-001" {
   location              = var.location
   resource_group_name   = azurerm_resource_group.rg-demo-test-westeurope-001.name
   network_interface_ids = [azurerm_network_interface.nic-demo-test-westeurope-001.id]
-  size                  = "Standard_DS1_v2"
+  size                  = "Standard_B1s"
   admin_username        = "steph"
   custom_data           = base64encode(data.template_file.linux-vm-cloud-init.rendered)
   #  priority              = "Spot"
