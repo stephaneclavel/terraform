@@ -46,7 +46,7 @@ module "vnet" {
     env = "tf-demo"
   }
 
-  #  depends_on = [azurerm_resource_group.rg-demo-test-westeurope-001]
+  depends_on = [azurerm_resource_group.rg-demo-test-westeurope-001]
 }
 
 resource "azurerm_network_security_group" "nsg-demo-test-westeurope-001" {
