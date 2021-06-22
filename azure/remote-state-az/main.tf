@@ -5,12 +5,19 @@ terraform {
     container_name       = "tstate"
     key                  = "terraform.tfstate"
   }
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "2.41.0"
+    }
+  }
 }
 
 provider "azurerm" {
-  version = "2.9.0"
   features {}
 }
+
 
 resource "azurerm_resource_group" "state-demo-secure" {
   name     = "state-demo"
