@@ -83,7 +83,7 @@ resource "azurerm_linux_virtual_machine" "vm1" {
   ]
 
   admin_ssh_key {
-    username   = "steph"
+    username   = "azureuser"
     public_key = file("~/.ssh/id_rsa.pub")
   }
 
@@ -126,7 +126,7 @@ resource "azurerm_linux_virtual_machine" "vm2" {
   ]
 
   admin_ssh_key {
-    username   = "steph"
+    username   = "azureuser"
     public_key = file(var.ssh_public_key_file)
   }
 
