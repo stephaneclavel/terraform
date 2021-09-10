@@ -3,7 +3,7 @@ output "resource_group_name" {
 }
 
 output "vm_linux_1_public_ip_address" {
-  value = azurerm_public_ip.pip.ip_address
+  value = data.azurerm_public_ip.vm1pip.ip_address
 }
 
 output "vm_linux_2_private_ip_address" {

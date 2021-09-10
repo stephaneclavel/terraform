@@ -142,3 +142,9 @@ resource "azurerm_linux_virtual_machine" "vm2" {
     version   = "latest"
   }
 }
+
+data "azurerm_public_ip" "vm1pip" {
+  name                = azurerm_public_ip.pip.name
+  resource_group_name = azurerm_resource_group.rg.name
+  depends_on          = [azurerm_linux_virtual_machine.vm1]
+}
