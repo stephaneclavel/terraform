@@ -77,13 +77,13 @@ resource "azurerm_linux_virtual_machine" "vm1" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = "Standard_B2s"
-  admin_username      = "azureuser"
+  admin_username      = "steph"
   network_interface_ids = [
     azurerm_network_interface.nic1.id,
   ]
 
   admin_ssh_key {
-    username   = "azureuser"
+    username   = "steph"
     public_key = file("~/.ssh/id_rsa.pub")
   }
 
@@ -119,14 +119,14 @@ resource "azurerm_linux_virtual_machine" "vm2" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = "Standard_B2s"
-  admin_username      = "azureuser"
+  admin_username      = "steph"
 
   network_interface_ids = [
     azurerm_network_interface.nic2.id,
   ]
 
   admin_ssh_key {
-    username   = "azureuser"
+    username   = "steph"
     public_key = file(var.ssh_public_key_file)
   }
 

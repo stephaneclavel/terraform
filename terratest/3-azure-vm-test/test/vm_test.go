@@ -68,7 +68,7 @@ func TestEndToEndDeploymentScenario(t *testing.T) {
 		}
 
 		sshConfig := &ssh.ClientConfig{
-			User: "azureuser",
+			User: "steph",
 			Auth: []ssh.AuthMethod{
 				ssh.PublicKeys(signer),
 			},
