@@ -1,5 +1,7 @@
 Adapted from https://docs.microsoft.com/en-us/azure/developer/terraform/best-practices-end-to-end-testing
+!!!!!!!!!!!
 Warning : as is, if test fails, TF deployment is NOT detroyed !! Watch out for costs !! 
+!!!!!!!!!!!
 
 Added data resource to get dynamic public ip address: 
 data "azurerm_public_ip" "vm1pip" {
@@ -9,4 +11,3 @@ data "azurerm_public_ip" "vm1pip" {
 }
 This is required as output would otherwise return empty as dynamic public IP addresses are assigned when actually used. 
 
-Must use azureuser as linux vm user as of September 2021. 
