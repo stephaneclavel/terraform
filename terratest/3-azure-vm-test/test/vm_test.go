@@ -77,20 +77,26 @@ func TestEndToEndDeploymentScenario(t *testing.T) {
 
 		sshConnection, err := ssh.Dial("tcp", fmt.Sprintf("%s:22", vmLinux1PublicIPAddress), sshConfig)
 		if err != nil {
-			t.Fatalf("Cannot establish SSH connection to vm-linux-1 public IP address: %v", err)
+			fmt.Errorf("Cannot establish SSH connection to vm-linux-1 public IP address: %v", err)
+		} else {
+			fmt.Println("SSH connection successful")
 		}
 
 		defer sshConnection.Close()
 		sshSession, err := sshConnection.NewSession()
 		if err != nil {
-			t.Fatalf("Cannot create SSH session to vm-linux-1 public IP address: %v", err)
-		}
+			fmt.Errorf("Cannot create SSH session to vm-linux-1 public IP address: %v", err)
+		} else {
+                        fmt.Println("SSH session successful")
+                }
 
 		defer sshSession.Close()
 		err = sshSession.Run(fmt.Sprintf("ping -c 1 %s", vmLinux2PrivateIPAddress))
 		if err != nil {
-			t.Fatalf("Cannot ping vm-linux-2 from vm-linux-2: %v", err)
-		}
+			fmt.Errorf("Cannot ping vm-linux-2 from vm-linux-2: %v", err)
+		} else {
+                        fmt.Println("Ping from VM1 to VM2 successful")
+                }
 	})
 
 	// When the test is completed, teardown the infrastructure by calling terraform destroy
